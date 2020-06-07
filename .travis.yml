@@ -1,0 +1,14 @@
+language: java
+jdk:
+  - openjdk14
+
+# используем режим обычного пользователя для сборки проекта.
+sudo: false
+
+# Отправлять уведомление на почту 71m25@mail.ru если сборка упала
+notifications:
+  email:
+    recipients:
+      -71m25@mail.ru
+    on_success: never # default: change
+    on_failure: always # default: always
