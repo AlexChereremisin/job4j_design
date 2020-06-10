@@ -1,6 +1,5 @@
 package ru.job4j.generic;
 
-import java.lang.reflect.ParameterizedType;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
