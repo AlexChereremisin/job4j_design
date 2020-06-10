@@ -1,5 +1,6 @@
 package ru.job4j.generic;
 
+import java.lang.reflect.ParameterizedType;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
@@ -33,11 +34,12 @@ public final class SimpleArray<T> implements Iterable<T> {
      * @param model новый элемент.
      */
     public void add(final T model) {
-        if (this.cursor < this.data.length && this.data[cursor] == null) {
-            this.data[cursor++] = model;
-        } else {
+        boolean condition = this.cursor < this.data.length
+                && this.data[cursor] == null;
+        if (!condition) {
             throw new IllegalStateException("Все ячейки заполнены!");
         }
+        this.data[cursor++] = model;
     }
 
     /**
@@ -94,8 +96,13 @@ public final class SimpleArray<T> implements Iterable<T> {
      * @return элемент взятый по данному индексу.
      */
     public T get(final int index) {
-        @SuppressWarnings("unchecked")
-        T t = (T) this.data[Objects.checkIndex(index, this.data.length)];
+        T t = null;
+        Object obj = this.data[Objects.checkIndex(index, this.data.length)];
+        try {
+            t = (T) obj;
+        } catch (ClassCastException ex) {
+            ex.printStackTrace();
+        }
         return t;
     }
 
@@ -137,8 +144,12 @@ public final class SimpleArray<T> implements Iterable<T> {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                @SuppressWarnings("unchecked")
-                T t = (T) data[position++];
+                T t = null;
+                try {
+                    t = (T) data[position++];
+                } catch (ClassCastException ex) {
+                    ex.printStackTrace();
+                }
                 return t;
             }
         };
