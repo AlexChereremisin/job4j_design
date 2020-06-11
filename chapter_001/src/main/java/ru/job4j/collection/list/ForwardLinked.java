@@ -45,6 +45,33 @@ public final class ForwardLinked<T> implements Iterable<T> {
     }
 
     /**
+     * Метод удаления последнего элемента односвязного списка.
+     * Если элементов в списке нет, то бросаем
+     * исключение NoSuchElementException().
+     * @return удаленный элемент.
+     */
+    public T deleteLast() {
+        if (head == null) {
+            throw new NoSuchElementException();
+        }
+        Node<T> tail = head;
+        while (tail.next != null) {
+            if (tail.next.next == null) {
+                break;
+            }
+            tail = tail.next;
+        }
+        if (tail.equals(head) && tail.next == null) {
+            head = null;
+            return tail.value;
+        } else {
+            T value = tail.next.value;
+            tail.next = null;
+            return value;
+        }
+    }
+
+    /**
      * Метод возвращает итератор по структуре.
      * @return итератор для данной структуры.
      */
