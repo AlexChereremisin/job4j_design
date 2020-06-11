@@ -54,13 +54,7 @@ public final class ForwardLinked<T> implements Iterable<T> {
         if (head == null) {
             throw new NoSuchElementException();
         }
-        Node<T> tail = head;
-        while (tail.next != null) {
-            if (tail.next.next == null) {
-                break;
-            }
-            tail = tail.next;
-        }
+        Node<T> tail = getPenultimate();
         if (tail.equals(head) && tail.next == null) {
             head = null;
             return tail.value;
@@ -69,6 +63,37 @@ public final class ForwardLinked<T> implements Iterable<T> {
             tail.next = null;
             return value;
         }
+    }
+
+    /**
+     * Метод переворота односвязного списка.
+     */
+    public void revert() {
+        Node<T> tail = getPenultimate();
+        Node<T> newHead = tail.next;
+        tail.next.next = tail;
+        tail.next = null;
+        while (head.next != null) {
+            tail = getPenultimate();
+            tail.next.next = tail;
+            tail.next = null;
+        }
+        head = newHead;
+    }
+
+    /**
+     * Метод возвращает предпоследний элемент коллекции.
+     * @return предпоследний элемент.
+     */
+    private Node<T> getPenultimate() {
+        Node<T> tail = head;
+        while (tail.next != null) {
+            if (tail.next.next == null) {
+                break;
+            }
+            tail = tail.next;
+        }
+        return tail;
     }
 
     /**
