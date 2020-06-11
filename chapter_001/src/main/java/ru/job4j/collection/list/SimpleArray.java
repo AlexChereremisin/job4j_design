@@ -54,6 +54,14 @@ public final class SimpleArray<T> implements Iterable<T> {
     }
 
     /**
+     * Геттер поля cursor.
+     * @return значение поля курсор.
+     */
+    public int size() {
+        return cursor;
+    }
+
+    /**
      * Метод создания итератора по данной структуре.
      * @return итератор по данной структуре.
      * Если итератор получен и после произошли изменения в структуре,
