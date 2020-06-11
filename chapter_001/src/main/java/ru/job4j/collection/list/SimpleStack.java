@@ -9,6 +9,10 @@ public final class SimpleStack<T> {
      * Контейнер на базе односвязного списка.
      */
     private final ForwardLinked<T> linked = new ForwardLinked<T>();
+    /**
+     * Размер стека.
+     */
+    private int size;
 
     /**
      * Метод возвращает последний элемент коллекции
@@ -18,7 +22,9 @@ public final class SimpleStack<T> {
      * @return последний элемент колекции.
      */
     public T pop() {
-        return linked.deleteLast();
+        T value = linked.deleteLast();
+        size--;
+        return value;
     }
 
     /**
@@ -27,6 +33,15 @@ public final class SimpleStack<T> {
      * @param value новый элемент, для добавления в коллекцию.
      */
     public void push(final T value) {
+        size++;
         linked.add(value);
+    }
+
+    /**
+     * Геттер поля size.
+     * @return размер стека.
+     */
+    public int size() {
+        return size;
     }
 }
