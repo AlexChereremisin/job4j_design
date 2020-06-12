@@ -22,8 +22,13 @@ public final class SimpleQueue<T> {
      * @return первый элемент очереди.
      */
     public T poll() {
+        while (in.size() > 0) {
+            out.push(in.pop());
+        }
         T value = out.pop();
-        popAndPushFirst(in, value, true);
+        while (out.size() > 0) {
+            in.push(out.pop());
+        }
         return value;
     }
 
@@ -34,34 +39,5 @@ public final class SimpleQueue<T> {
      */
     public void push(final T value) {
         in.push(value);
-        popAndPushFirst(out, value, false);
-    }
-
-    /**
-     * Метод удаляет или добавляет элемент в начало
-     * указанного стека.
-     * @param stack стек в котором надо удалить или
-     *              добавить элемент в начало.
-     * @param value элемент для добавления или удаления.
-     * @param isPop true если хотим удалить первый элемент стека,
-     *              false - для добавления элемента в начало стека.
-     */
-    private void popAndPushFirst(
-            final SimpleStack<T> stack,
-            final T value,
-            final boolean isPop
-    ) {
-        SimpleStack<T> tmp = new SimpleStack<>();
-        while (stack.size() > 0) {
-            tmp.push(stack.pop());
-        }
-        if (isPop) {
-            tmp.pop();
-        } else {
-            tmp.push(value);
-        }
-        while (tmp.size() > 0) {
-            stack.push(tmp.pop());
-        }
     }
 }
