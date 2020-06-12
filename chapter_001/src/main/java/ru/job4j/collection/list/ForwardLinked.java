@@ -18,7 +18,7 @@ public final class ForwardLinked<T> implements Iterable<T> {
      * @param value новый элемент списка.
      */
     public void add(final T value) {
-        Node<T> node = new Node<T>(value, null);
+        Node<T> node = new Node<>(value, null);
         if (head == null) {
             head = node;
             return;
@@ -55,14 +55,15 @@ public final class ForwardLinked<T> implements Iterable<T> {
             throw new NoSuchElementException();
         }
         Node<T> tail = getPenultimate();
-        if (tail.equals(head) && tail.next == null) {
-            head = null;
-            return tail.value;
-        } else {
-            T value = tail.next.value;
+        T value;
+        if (tail.next != null) {
+            value = tail.value;
             tail.next = null;
-            return value;
+        } else {
+            value = head.value;
+            head = null;
         }
+        return value;
     }
 
     /**
