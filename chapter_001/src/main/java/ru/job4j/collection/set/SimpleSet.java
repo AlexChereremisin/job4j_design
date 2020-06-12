@@ -31,7 +31,7 @@ public final class SimpleSet<E> implements Iterable<E> {
      * @param el элемент, который ищем в множестве.
      * @return true, если такой элемент есть, иначе - false.
      */
-    private boolean contains(E el) {
+    private boolean contains(final E el) {
         boolean rsl = false;
         E tmp;
         for (int index = 0; index < container.size(); index++) {
