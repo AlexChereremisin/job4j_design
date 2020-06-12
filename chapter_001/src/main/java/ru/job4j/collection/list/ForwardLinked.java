@@ -70,12 +70,16 @@ public final class ForwardLinked<T> implements Iterable<T> {
      * Метод переворота односвязного списка.
      */
     public void revert() {
-        Node<T> tail = getPenultimate();
-        Node<T> newHead = tail.next;
-        tail.next.next = tail;
-        tail.next = null;
+        if (head == null || head.next == null) {
+            return;
+        }
+        Node<T> tail;
+        Node<T> newHead = null;
         while (head.next != null) {
             tail = getPenultimate();
+            if (newHead == null) {
+                newHead = tail.next;
+            }
             tail.next.next = tail;
             tail.next = null;
         }

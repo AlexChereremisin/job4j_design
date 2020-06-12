@@ -89,6 +89,15 @@ public class ForwardLinkedTest {
     }
 
     @Test
+    public void whenAddOneRevertThenIterate() {
+        ForwardLinked<Integer> linked = new ForwardLinked<>();
+        linked.add(1);
+        linked.revert();
+        Iterator<Integer> it = linked.iterator();
+        assertThat(it.next(), is(1));
+    }
+
+    @Test
     public void whenAddAndRevertThenIterate() {
         ForwardLinked<Integer> linked = new ForwardLinked<>();
         linked.add(1);
@@ -101,5 +110,12 @@ public class ForwardLinkedTest {
         assertThat(it.next(), is(3));
         assertThat(it.next(), is(2));
         assertThat(it.next(), is(1));
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void whenEmptyListRevertIterateNextThanException() {
+        ForwardLinked<Integer> linked = new ForwardLinked<>();
+        linked.revert();
+        linked.iterator().next();
     }
 }
