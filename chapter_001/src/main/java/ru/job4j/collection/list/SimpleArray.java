@@ -99,13 +99,7 @@ public final class SimpleArray<T> implements Iterable<T> {
             @Override
             public boolean hasNext() {
                 isContainerMod();
-                while (position < container.length) {
-                    if (container[position] != null) {
-                        break;
-                    }
-                    this.position++;
-                }
-                return position < container.length;
+                return position < cursor;
             }
 
             /**

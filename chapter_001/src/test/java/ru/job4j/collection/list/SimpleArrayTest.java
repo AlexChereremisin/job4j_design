@@ -1,5 +1,6 @@
 package ru.job4j.collection.list;
 
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.is;
 
@@ -53,5 +54,23 @@ public class SimpleArrayTest {
         Iterator<String> it = array.iterator();
         array.add("second");
         it.next();
+    }
+
+    @Test
+    public void whenAddNullThanGetNull() {
+        SimpleArray<String> array = new SimpleArray<>();
+        array.add(null);
+        assertNull(array.get(0));
+    }
+
+    @Test
+    public void whenAddNullThanIterate() {
+        SimpleArray<String> array = new SimpleArray<>();
+        array.add(null);
+        array.add(null);
+        Iterator<String> it = array.iterator();
+        assertNull(it.next());
+        assertNull(it.next());
+        assertThat(it.hasNext(), is(false));
     }
 }

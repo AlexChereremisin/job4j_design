@@ -17,19 +17,31 @@ public final class SimpleSet<E> implements Iterable<E> {
     /**
      * Метод добавления нового элемента в множество.
      * Одинаковые элементы не добавляются.
-     * @param e новый элемент.
+     * @param el новый элемент.
      */
-    public void add(final E e) {
+    public void add(final E el) {
+        if (contains(el)) {
+            return;
+        }
+        container.add(el);
+    }
+
+    /**
+     * Метод проверяет содержится ли элемент в множестве.
+     * @param el элемент, который ищем в множестве.
+     * @return true, если такой элемент есть, иначе - false.
+     */
+    private boolean contains(E el) {
+        boolean rsl = false;
         E tmp;
         for (int index = 0; index < container.size(); index++) {
             tmp = container.get(index);
-            if (tmp == null) {
-                return;
-            } else if (tmp.equals(e)) {
-                return;
+            if (tmp == null || tmp.equals(el)) {
+                rsl = true;
+                break;
             }
         }
-        container.add(e);
+        return rsl;
     }
 
     /**

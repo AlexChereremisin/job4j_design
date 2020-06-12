@@ -20,13 +20,14 @@ public class SimpleSetTest {
     }
 
     @Test
-    public void whenAddNull() {
+    public void whenAddDuplicateNullThanIterate() {
         SimpleSet<Integer> set = new SimpleSet<>();
         set.add(1);
         set.add(null);
         set.add(null);
         Iterator<Integer> it = set.iterator();
         assertThat(it.next(), is(1));
+        assertNull(it.next());
         assertThat(it.hasNext(), is(false));
     }
 
