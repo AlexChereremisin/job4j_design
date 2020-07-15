@@ -1,5 +1,7 @@
 package ru.job4j.collection.list;
 
+import java.util.Optional;
+
 /**
  * Реализация структуры данных Queue.
  * @param <T> любой ссылочный тип.
@@ -22,12 +24,25 @@ public final class SimpleQueue<T> {
      * @return первый элемент очереди.
      */
     public T poll() {
-        while (in.size() > 0) {
-            out.push(in.pop());
-        }
-        T value = out.pop();
-        while (out.size() > 0) {
-            in.push(out.pop());
+        T value = (T) Optional.empty();
+        int len = in.size() * 2;
+        boolean flag;
+        boolean outFlag = false;
+        boolean fKey = true;
+        for (int i = 0; i <= len; i ++) {
+            flag = in.size() > 0 && fKey;
+            if (flag) {
+                out.push(in.pop());
+            } else {
+                if (fKey) {
+                    value = out.pop();
+                    fKey = false;
+                    outFlag = true;
+                }
+            }
+            if (outFlag && out.size() > 0) {
+                in.push(out.pop());
+            }
         }
         return value;
     }
