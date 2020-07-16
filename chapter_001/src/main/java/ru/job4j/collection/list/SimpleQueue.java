@@ -24,27 +24,12 @@ public final class SimpleQueue<T> {
      * @return первый элемент очереди.
      */
     public T poll() {
-        T value = (T) Optional.empty();
-        int len = in.size() * 2;
-        boolean flag;
-        boolean outFlag = false;
-        boolean fKey = true;
-        for (int i = 0; i <= len; i ++) {
-            flag = in.size() > 0 && fKey;
-            if (flag) {
+        if (!(out.size() > 0)) {
+            while (in.size() > 0) {
                 out.push(in.pop());
-            } else {
-                if (fKey) {
-                    value = out.pop();
-                    fKey = false;
-                    outFlag = true;
-                }
-            }
-            if (outFlag && out.size() > 0) {
-                in.push(out.pop());
             }
         }
-        return value;
+        return out.pop();
     }
 
     /**
