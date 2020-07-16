@@ -25,9 +25,11 @@ public class SimpleSetTest {
         set.add(1);
         set.add(null);
         set.add(null);
+        set.add(2);
         Iterator<Integer> it = set.iterator();
         assertThat(it.next(), is(1));
         assertNull(it.next());
+        assertThat(it.next(), is(2));
         assertThat(it.hasNext(), is(false));
     }
 
@@ -35,12 +37,15 @@ public class SimpleSetTest {
     public void whenAddDuplicateThanIterateNextUniqueElement() {
         SimpleSet<Integer> set = new SimpleSet<>();
         set.add(5);
+        set.add(null);
         set.add(7);
         set.add(7);
         set.add(7);
+        set.add(null);
         set.add(5);
         Iterator<Integer> it = set.iterator();
         assertThat(it.next(), is(5));
+        assertNull(it.next());
         assertThat(it.next(), is(7));
         assertThat(it.hasNext(), is(false));
     }

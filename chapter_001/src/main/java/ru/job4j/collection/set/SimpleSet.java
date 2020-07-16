@@ -36,7 +36,10 @@ public final class SimpleSet<E> implements Iterable<E> {
         E tmp;
         for (int index = 0; index < container.size(); index++) {
             tmp = container.get(index);
-            if (tmp == null || tmp.equals(el)) {
+            if (
+                    (tmp == null && el == null)
+                    || (tmp != null && tmp.equals(el))
+            ) {
                 rsl = true;
                 break;
             }
