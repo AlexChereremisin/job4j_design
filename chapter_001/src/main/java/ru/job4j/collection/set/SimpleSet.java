@@ -3,6 +3,7 @@ package ru.job4j.collection.set;
 import ru.job4j.collection.list.SimpleArray;
 
 import java.util.Iterator;
+import java.util.Objects;
 
 /**
  * Реализация структуры данных Set.
@@ -36,10 +37,7 @@ public final class SimpleSet<E> implements Iterable<E> {
         E tmp;
         for (int index = 0; index < container.size(); index++) {
             tmp = container.get(index);
-            if (
-                    (tmp == null && el == null)
-                    || (tmp != null && tmp.equals(el))
-            ) {
+            if (Objects.equals(tmp, el)) {
                 rsl = true;
                 break;
             }
