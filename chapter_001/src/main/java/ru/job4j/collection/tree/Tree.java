@@ -1,9 +1,6 @@
 package ru.job4j.collection.tree;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * Реализация простого интерфейса простого дерева.
@@ -21,6 +18,25 @@ public class Tree<E> implements SimpleTree<E> {
      */
     Tree(final E root) {
         this.root = new Node<>(root);
+    }
+
+    /**
+     * Метод проверяет является ли дерево бинарным.
+     * @return true, если дерево бинарное, false - если нет.
+     */
+    public boolean isBinary() {
+        boolean rsl = false;
+        Queue<Node<E>> data = new LinkedList<>();
+        data.offer(this.root);
+        while (!data.isEmpty()) {
+            Node<E> el = data.poll();
+            rsl = el.children.size() <= 2;
+            if (!rsl) {
+                break;
+            }
+            data.addAll(el.children);
+        }
+        return rsl;
     }
 
     /**
