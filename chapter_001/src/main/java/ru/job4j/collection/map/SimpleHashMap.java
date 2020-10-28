@@ -1,9 +1,6 @@
 package ru.job4j.collection.map;
 
-import java.util.Arrays;
-import java.util.ConcurrentModificationException;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 /**
  * Простая реализация структуры данных HashMap.
@@ -153,10 +150,14 @@ public final class SimpleHashMap<K,V> implements Iterable {
 
     /**
      * Метод вычисления хеш-функции.
-     * @param h хеш-значение ключа.
+     * @param key ключ.
      * @return хеш-значение.
      */
-    public int hash(int h) {
+    public int hash(K key) {
+        if (key == null) {
+            return 0;
+        }
+        int h = key.hashCode();
         h ^= (h >>> 20) ^ (h >>> 12);
         return h ^ (h >>> 7) ^ (h >>> 4);
     }
@@ -168,11 +169,8 @@ public final class SimpleHashMap<K,V> implements Iterable {
      * @return true если элемент добавлен, false если уже есть такой элемент в этой ячейки.
      */
     public boolean insert(K key, V value) {
-        if (key == null) {
-            return this.insertIfNullKey(value);
-        }
         boolean result = false;
-        int index = hash(key.hashCode()) & (this.table.length - 1);
+        int index = hash(key) & (this.table.length - 1);
         if (this.table[index] == null) {
             this.table[index] = new Node<>(key, value);
             this.element_count++;
@@ -194,7 +192,7 @@ public final class SimpleHashMap<K,V> implements Iterable {
         if (key == null) {
             return this.table[0] == null ? null : this.table[0].getValue();
         }
-        int index = hash(key.hashCode()) & (this.table.length - 1);
+        int index = hash(key) & (this.table.length - 1);
         boolean result = this.table[index] != null
                         && this.table[index].getKey().equals(key);
         return result ? this.table[index].getValue() : null;
@@ -207,47 +205,15 @@ public final class SimpleHashMap<K,V> implements Iterable {
      * false - не нашелся, то нечего удалять.
      */
     public boolean delete(K key) {
-        if (key == null) {
-            return this.deleteIfNullKey();
-        }
         boolean result = false;
-        int index = hash(key.hashCode()) & (this.table.length - 1);
-        if (this.table[index] != null && this.table[index].getKey().equals(key)) {
+        int index = hash(key) & (this.table.length - 1);
+        if (this.table[index] != null
+                && Objects.equals(this.table[index].getKey(), key)
+        ) {
             this.table[index] = null;
             this.element_count--;
             ++this.modCount;
             result = true;
-        }
-        return result;
-    }
-
-    /**
-     * Метод добавляет элемент с ключом null.
-     * Элемент добавляется в 0 ячейку, если она пуста.
-     * @param value добавляемое значение.
-     * @return true - если добавили элемент, false - если не добавили.
-     */
-    private boolean insertIfNullKey(V value) {
-        boolean result = false;
-        if (this.table[0] == null) {
-            this.table[0] = new Node<K,V>(null, value);
-            this.element_count++;
-            ++this.modCount;
-            result = true;
-        }
-        return result;
-    }
-
-    /**
-     *  Метод удаления при null ключе.
-     * @return true - если удалили элемент, false - если не удалили.
-     */
-    private boolean deleteIfNullKey() {
-        boolean result = this.table[0] != null;
-        if (result) {
-            this.table[0] = null;
-            this.element_count--;
-            ++this.modCount;
         }
         return result;
     }
@@ -278,7 +244,7 @@ public final class SimpleHashMap<K,V> implements Iterable {
         int index = 0;
         while (iterator.hasNext()) {
             tmp = iterator.next();
-            index = this.hash(tmp.getKey().hashCode()) & (newTable.length - 1);
+            index = this.hash(tmp.getKey()) & (newTable.length - 1);
             newTable[index] = tmp;
         }
     }

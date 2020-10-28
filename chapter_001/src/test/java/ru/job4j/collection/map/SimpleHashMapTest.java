@@ -61,6 +61,14 @@ public class SimpleHashMapTest {
     }
 
     @Test
+    public void whenAddTwoNullElementsThenAddFirstNull() {
+        SimpleHashMap<Object, Integer> map = new SimpleHashMap<>();
+        map.insert(null, null);
+        map.insert(null, 1);
+        assertNull(map.get(null));
+    }
+
+    @Test
     public void whenAddTwoElementsThenIterate() {
         SimpleHashMap<Integer, String> map = new SimpleHashMap<>();
         map.insert(1, "one");
