@@ -1,6 +1,7 @@
 package ru.job4j.collection.tree;
 
 import java.util.*;
+import java.util.function.Predicate;
 
 /**
  * Реализация простого интерфейса простого дерева.
@@ -25,18 +26,7 @@ public class Tree<E> implements SimpleTree<E> {
      * @return true, если дерево бинарное, false - если нет.
      */
     public boolean isBinary() {
-        boolean rsl = false;
-        Queue<Node<E>> data = new LinkedList<>();
-        data.offer(this.root);
-        while (!data.isEmpty()) {
-            Node<E> el = data.poll();
-            rsl = el.children.size() <= 2;
-            if (!rsl) {
-                break;
-            }
-            data.addAll(el.children);
-        }
-        return rsl;
+        return this.findByPredicate((n) -> n.children.size() > 2).isEmpty();
     }
 
     /**
@@ -80,12 +70,22 @@ public class Tree<E> implements SimpleTree<E> {
      */
     @Override
     public Optional<Node<E>> findBy(E value) {
+        return this.findByPredicate((n) -> n.value.equals(value));
+    }
+
+    /**
+     * Метод поиска по предикату.
+     * @param predicate условие.
+     * @return Optional.empty(), если условие не выполнилось ниразу,
+     * если условие выполнилось, то Optional содержащий узел на котором выполнилось условие.
+     */
+    private Optional<Node<E>> findByPredicate(Predicate<Node<E>> predicate) {
         Optional<Node<E>> rsl = Optional.empty();
         Queue<Node<E>> data = new LinkedList<>();
         data.offer(this.root);
         while (!data.isEmpty()) {
             Node<E> el = data.poll();
-            if (el.value.equals(value)) {
+            if (predicate.test(el)) {
                 rsl = Optional.of(el);
                 break;
             }
