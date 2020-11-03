@@ -45,13 +45,12 @@ public class Config {
     }
 
     /**
-     * Метод проверки, что строка является комментарием.
+     * Метод проверки, что строка является ключ-значение.
      * @param str строка из файла.
      * @return true - если это ключ-значение, false - комментарий.
      */
     private boolean isPair(String str) {
-        Pattern comment = Pattern.compile("^#");
-        return !comment.matcher(str).find();
+        return !(str.startsWith("#") || str.equals(""));
     }
 
     /**
