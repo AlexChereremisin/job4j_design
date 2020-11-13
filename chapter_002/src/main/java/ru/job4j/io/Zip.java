@@ -11,8 +11,15 @@ public class Zip {
         if (sources == null) {
             throw new IllegalArgumentException("Parameter sources is NULL!");
         }
-        for (File file : sources) {
-            this.packSingleFile(file, target);
+        try (ZipOutputStream zip = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(target)))) {
+            for (File file : sources) {
+                zip.putNextEntry(new ZipEntry(file.getPath()));
+                try (BufferedInputStream out = new BufferedInputStream(new FileInputStream(file))) {
+                    zip.write(out.readAllBytes());
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
