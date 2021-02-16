@@ -7,11 +7,6 @@ import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-/**
- * TO DO
- * Доработайте класса ru.job4j.io.EchoServer.
- * Если клиент отправлять запрос http://localhost:9000/?msg=Bye нужно завершить работу сервера.
- */
 public class EchoServer {
     public static void main(String[] args) throws IOException {
         try (ServerSocket server = new ServerSocket(9000)) {
@@ -22,15 +17,25 @@ public class EchoServer {
                              new InputStreamReader(socket.getInputStream()))
                 ) {
                     String str;
-                    boolean flag = false;
+                    boolean isHello = false;
+                    boolean isExit = false;
                     while (!(str = in.readLine()).isEmpty()) {
                         System.out.println(str);
-                        if (str.contains("/?msg=Bye HTTP/")) {
-                            flag = true;
+                        if (str.contains("/?msg=Hello")) {
+                            isHello = true;
+                        }
+                        if (str.contains("/?msg=Exit")) {
+                            isExit = true;
                         }
                     }
-                    out.write("HTTP/1.1 200 OK\r\n".getBytes());
-                    if (flag) {
+                    out.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
+                    if (!(isExit || isHello)) {
+                        out.write("What".getBytes());
+                    }
+                    if (isHello) {
+                        out.write("Hello".getBytes());
+                    }
+                    if (isExit) {
                         server.close();
                     }
                 }
