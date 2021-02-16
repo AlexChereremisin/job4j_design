@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ConsoleChat {
     private final String path;
@@ -17,8 +19,15 @@ public class ConsoleChat {
         this.botAnswers = botAnswers;
     }
 
+    private ArrayList<String> getAnswers() {
+        String[] strArr = FileHelper.readFile(Path.of(botAnswers)).split(System.lineSeparator());
+        return new ArrayList<>(Arrays.asList(strArr));
+    }
+
     public void run() {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
+            ArrayList<String> answers = this.getAnswers();
+            ArrayList<String> log = new ArrayList<>();
             boolean flag = false;
             StringBuilder str = new StringBuilder();
             StringBuilder answer = new StringBuilder();
@@ -29,15 +38,17 @@ public class ConsoleChat {
                 if (str.toString().equals(CONTINUE)) {
                     flag = false;
                 }
+                log.add(str.toString());
                 if (!flag) {
-                    answer.append(FileHelper.randomReadFile(Path.of(this.botAnswers)));
+                    answer.append(answers.get((int)(Math.random() * answers.size())));
                     System.out.println(answer.toString());
+                    log.add(answer.toString());
                 }
-                FileHelper.writeFile(Path.of(path), str.append(System.lineSeparator()).append(answer).toString());
                 str.delete(0, str.length());
                 answer.delete(0, answer.length());
             }
-            FileHelper.writeFile(Path.of(path), str.append(System.lineSeparator()).append(answer).toString());
+            log.add(str.toString());
+            FileHelper.writeFile(Path.of(path), log.toArray(String[]::new));
         } catch (IOException ex) {
             ex.printStackTrace();
         }

@@ -5,9 +5,6 @@ import org.junit.rules.TemporaryFolder;
 
 import java.io.*;
 import java.nio.file.Path;
-import java.util.ArrayList;
-
-import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
 public class ConsoleChatTest {
@@ -33,12 +30,10 @@ public class ConsoleChatTest {
             System.setOut(ps);
             ConsoleChat chat = new ConsoleChat(log.toString(), answer.toString());
             chat.run();
-            String result = FileHelper.readFile(log);
-            String expected =
-                    "Привет" + System.lineSeparator() +
-                    "БОТ" + System.lineSeparator() +
-                    "закончить";
-            assertThat(result.equals(expected), is(true));
+            FileHelper.readFile(log);
+            String[] result = FileHelper.readFile(log).split(System.lineSeparator());
+            String[] expected = {"Привет", "БОТ", "закончить"};
+            assertArrayEquals(expected, result);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -58,13 +53,9 @@ public class ConsoleChatTest {
             System.setOut(ps);
             ConsoleChat chat = new ConsoleChat(log.toString(), answer.toString());
             chat.run();
-            String result = FileHelper.readFile(log);
-            String expected =
-                    "Привет" + System.lineSeparator() +
-                    "БОТ" + System.lineSeparator() +
-                    "стоп" + System.lineSeparator()+
-                    "закончить";
-            assertThat(result.equals(expected), is(true));
+            String[] result = FileHelper.readFile(log).split(System.lineSeparator());
+            String[] expected = {"Привет", "БОТ", "стоп", "закончить"};
+            assertArrayEquals(expected, result);
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -90,18 +81,9 @@ public class ConsoleChatTest {
             System.setOut(ps);
             ConsoleChat chat = new ConsoleChat(log.toString(), answer.toString());
             chat.run();
-            String result = FileHelper.readFile(log);
-            System.out.println(result);
-            String expected =
-                    "Привет" + System.lineSeparator() +
-                    "БОТ" + System.lineSeparator() +
-                    "стоп" + System.lineSeparator() +
-                    "ау" + System.lineSeparator() +
-                    "" + System.lineSeparator() +
-                    "продолжить" + System.lineSeparator() +
-                    "БОТ" + System.lineSeparator() +
-                    "закончить";
-            assertThat(result.equals(expected), is(true));
+            String[] result = FileHelper.readFile(log).split(System.lineSeparator());
+            String[] expected = {"Привет", "БОТ", "стоп", "ау", "", "продолжить", "БОТ", "закончить"};
+            assertArrayEquals(expected, result);
         } catch (IOException ex) {
             ex.printStackTrace();
         }
