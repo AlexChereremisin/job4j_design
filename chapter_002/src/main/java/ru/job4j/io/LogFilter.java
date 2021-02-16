@@ -17,7 +17,7 @@ public class LogFilter {
      */
     public static List<String> filter(String file) {
         List<String> rsl = new ArrayList<>();
-        try (BufferedReader in = new BufferedReader(new FileReader("log.txt"))) {
+        try (BufferedReader in = new BufferedReader(new FileReader("data/log.txt"))) {
             String patternStr = ".*\"\s404.*$";
             Pattern pattern = Pattern.compile(patternStr);
             in.lines().forEach((line) -> {
@@ -56,7 +56,7 @@ public class LogFilter {
      * @param args массив строк.
      */
     public static void main(String[] args) {
-        List<String> log = filter("log.txt");
+        List<String> log = filter("data/log.txt");
         save(log, "404.txt");
     }
 }
