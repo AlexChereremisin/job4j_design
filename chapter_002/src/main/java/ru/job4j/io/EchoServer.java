@@ -31,8 +31,6 @@ public class EchoServer {
                     }
                     out.write("HTTP/1.1 200 OK\r\n".getBytes());
                     if (flag) {
-                        in.close();
-                        out.close();
                         server.close();
                     }
                 }
