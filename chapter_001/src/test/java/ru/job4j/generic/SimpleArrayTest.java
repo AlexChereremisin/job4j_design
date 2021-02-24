@@ -91,7 +91,7 @@ public class SimpleArrayTest {
     @Test
     public void whenAddSameIntegerThanGetIterator() {
         SimpleArray<Integer> simpleArray = new SimpleArray<>(7);
-        for(int i = 1; i <= 7; i++) {
+        for (int i = 1; i <= 7; i++) {
             simpleArray.add(i);
         }
         Iterator<Integer> result = simpleArray.iterator();

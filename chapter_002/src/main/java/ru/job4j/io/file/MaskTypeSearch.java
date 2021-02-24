@@ -10,7 +10,8 @@ import java.nio.file.PathMatcher;
 public class MaskTypeSearch extends Search {
     /**
      * Метод сравнения файла заданной маске.
-     * @param name файл.
+     *
+     * @param name    файл.
      * @param pattern заданная маска.
      * @return true если имя файла соответствует заданной маске,
      * false если не соответствует.

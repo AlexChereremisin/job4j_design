@@ -7,7 +7,7 @@ import java.util.*;
  * @param <K> любой ссылочный тип.
  * @param <V> любой ссылочный тип.
  */
-public final class SimpleHashMap<K,V> implements Iterable {
+public final class SimpleHashMap<K, V> implements Iterable {
     /**
      * Максимальный размер таблицы.
      */
@@ -36,7 +36,7 @@ public final class SimpleHashMap<K,V> implements Iterable {
     /**
      * Счетчик элементов.
      */
-    private int element_count = 0;
+    private int elementCount = 0;
 
     /**
      * Счетчик изменений внутреннего массива.
@@ -48,7 +48,7 @@ public final class SimpleHashMap<K,V> implements Iterable {
      * @param <K> любой ссылочный тип.
      * @param <V> любой ссылочный тип.
      */
-    static class Node<K,V> {
+    static class Node<K, V> {
         /**
          * Ключ.
          */
@@ -88,13 +88,15 @@ public final class SimpleHashMap<K,V> implements Iterable {
          * Переопределение toString.
          * @return строку типа "key = value"
          */
-        public final String toString() { return key + "=" + value; }
+        public final String toString() {
+            return key + "=" + value;
+        }
     }
 
     /**
      * Внутренняя реализация использует массив.
      */
-    private Node<K,V>[] table;
+    private Node<K, V>[] table;
 
     /**
      * Конструктор по умолчанию.
@@ -134,7 +136,7 @@ public final class SimpleHashMap<K,V> implements Iterable {
      * @return размер таблицы.
      */
     public int size() {
-        return this.element_count;
+        return this.elementCount;
     }
 
     /**
@@ -143,9 +145,9 @@ public final class SimpleHashMap<K,V> implements Iterable {
      */
     @Override
     public String toString() {
-        return "SimpleHashMap{" +
-                "table=" + Arrays.toString(table) +
-                '}';
+        return "SimpleHashMap{"
+                + "table=" + Arrays.toString(table)
+                + '}';
     }
 
     /**
@@ -173,7 +175,7 @@ public final class SimpleHashMap<K,V> implements Iterable {
         int index = hash(key) & (this.table.length - 1);
         if (this.table[index] == null) {
             this.table[index] = new Node<>(key, value);
-            this.element_count++;
+            this.elementCount++;
             ++this.modCount;
            result = true;
         }
@@ -211,7 +213,7 @@ public final class SimpleHashMap<K,V> implements Iterable {
                 && Objects.equals(this.table[index].getKey(), key)
         ) {
             this.table[index] = null;
-            this.element_count--;
+            this.elementCount--;
             ++this.modCount;
             result = true;
         }
@@ -227,7 +229,7 @@ public final class SimpleHashMap<K,V> implements Iterable {
             this.threshold = Integer.MAX_VALUE;
             return;
         }
-        Node<K,V>[] newTable = new Node[newCapacity];
+        Node<K, V>[] newTable = new Node[newCapacity];
         this.transfer(newTable);
         this.table = newTable;
         this.threshold = Math.round(newCapacity * this.loadFactor);
@@ -239,8 +241,8 @@ public final class SimpleHashMap<K,V> implements Iterable {
      * @param newTable старый размер масива увеличенный вдвое.
      */
     private void transfer(Node[] newTable) {
-        Iterator<Node<K,V>> iterator = this.iterator();
-        Node<K,V> tmp = null;
+        Iterator<Node<K, V>> iterator = this.iterator();
+        Node<K, V> tmp = null;
         int index = 0;
         while (iterator.hasNext()) {
             tmp = iterator.next();
@@ -254,7 +256,7 @@ public final class SimpleHashMap<K,V> implements Iterable {
      * @return итератор по данной структуре.
      */
     @Override
-    public Iterator<Node<K,V>> iterator() {
+    public Iterator<Node<K, V>> iterator() {
         return new Iterator<Node<K, V>>() {
             /**
              * Начальная позиция.
@@ -310,8 +312,8 @@ public final class SimpleHashMap<K,V> implements Iterable {
              * Перебирает элементы, пока не найдет != null.
              * @return элемент.
              */
-            private Node<K,V> ifNext() {
-                Node<K,V> node = null;
+            private Node<K, V> ifNext() {
+                Node<K, V> node = null;
                 while (node == null) {
                     node = SimpleHashMap.this.table[this.position++];
                 }

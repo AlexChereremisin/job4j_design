@@ -7,6 +7,7 @@ package ru.job4j.io.file;
 public class FindFile {
     /**
      * Точка входа в программу.
+     *
      * @param args - массив строк.
      */
     public static void main(String[] args) {

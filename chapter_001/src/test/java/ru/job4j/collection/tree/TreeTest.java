@@ -56,7 +56,7 @@ public class TreeTest {
         tree.add(3, 4);
         tree.add(4, 5);
         tree.add(5, 2);
-        tree.add(5,1);
+        tree.add(5, 1);
 
         Optional<List<SimpleTree.Node<Integer>>> optional = tree.getChildren(1);
         optional.ifPresent(nodes -> {

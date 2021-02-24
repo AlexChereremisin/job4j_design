@@ -8,7 +8,8 @@ import java.nio.file.Path;
 public class NameTypeSearch extends Search {
     /**
      * Метод сравнения файла и заданного имени.
-     * @param name файл.
+     *
+     * @param name    файл.
      * @param pattern заданное имя.
      * @return true если имя файла совпадает с заданным именем,
      * false если не совпадает.

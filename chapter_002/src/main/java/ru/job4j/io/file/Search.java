@@ -19,17 +19,18 @@ public abstract class Search {
 
     /**
      * Метод записи результата поиска в файл.
+     *
      * @param output путь до файла.
      */
     private void writeResultToFile(Path output) {
         try (
-            BufferedWriter bw = new BufferedWriter(
-                new FileWriter(
-                    output.toString(),
-                    StandardCharsets.UTF_8,
-                    false
+                BufferedWriter bw = new BufferedWriter(
+                        new FileWriter(
+                                output.toString(),
+                                StandardCharsets.UTF_8,
+                                false
+                        )
                 )
-            )
         ) {
             bw.write(searchResult.toString());
         } catch (IOException e) {
@@ -39,6 +40,7 @@ public abstract class Search {
 
     /**
      * Иетод обхода содержимого папки и подпапок.
+     *
      * @param d начальная папка.
      * @param n имя, маска или регулярное выражение.
      * @param o путь до файла с результатами поиска.
@@ -57,6 +59,7 @@ public abstract class Search {
                         searchResult.add(file.toAbsolutePath().toString());
                     }
                 }
+
                 @Override
                 public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
                     find(file);
@@ -77,7 +80,8 @@ public abstract class Search {
 
     /**
      * Метод сравнения имени файла критериям поиска.
-     * @param name путь до файла.
+     *
+     * @param name    путь до файла.
      * @param pattern имя, маска или регулярное выражение.
      * @return true если имя файла соответствует критериям,
      * false если не соответствует.

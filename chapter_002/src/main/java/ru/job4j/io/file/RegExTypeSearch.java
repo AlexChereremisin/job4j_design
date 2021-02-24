@@ -10,7 +10,8 @@ import java.nio.file.PathMatcher;
 public class RegExTypeSearch extends Search {
     /**
      * Метод сравнения файла заданному регулярному выражению.
-     * @param name файл.
+     *
+     * @param name    файл.
      * @param pattern заданное регулярное выражение.
      * @return true если имя файла соответствует регулярному выражению,
      * false если не соответствует.

@@ -62,7 +62,7 @@ public class SimpleStackTest {
     public void whenPushThanSize1() {
         SimpleStack<Integer> stack = new SimpleStack<>();
         stack.push(1);
-        assertThat(stack.size(),is(1));
+        assertThat(stack.size(), is(1));
     }
 
     @Test
@@ -70,12 +70,12 @@ public class SimpleStackTest {
         SimpleStack<Integer> stack = new SimpleStack<>();
         stack.push(1);
         stack.pop();
-        assertThat(stack.size(),is(0));
+        assertThat(stack.size(), is(0));
     }
 
     @Test
     public void whenEmptyStackThanSize0() {
         SimpleStack<Integer> stack = new SimpleStack<>();
-        assertThat(stack.size(),is(0));
+        assertThat(stack.size(), is(0));
     }
 }

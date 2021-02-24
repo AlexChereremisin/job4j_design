@@ -16,6 +16,7 @@ public class Engine {
      * Карта соответствий переданных параметров типам поиска.
      */
     private final Map<String, Search> typeMap = new HashMap<>();
+
     {
         typeMap.put("name", new NameTypeSearch());
         typeMap.put("mask", new MaskTypeSearch());
@@ -25,6 +26,7 @@ public class Engine {
     /**
      * Конструктор класса.
      * Внутри происходит вызов валидации ключей.
+     *
      * @param keys параметры поиска и записи в файл.
      */
     public Engine(String[] keys) {
@@ -33,6 +35,7 @@ public class Engine {
 
     /**
      * Метод выбора типа поиска из карты typeMap.
+     *
      * @param param параметры поиска.
      */
     private void runTypeSearch(String[] param) {
@@ -73,6 +76,7 @@ public class Engine {
 
     /**
      * Метод валидации ключей.
+     *
      * @param keys - ключи полученные из консоли.
      */
     private void validateKeys(String[] keys) {
@@ -82,7 +86,7 @@ public class Engine {
             String[] param = new String[4];
             String[] validKeys = {"-d", "-n", "-t", "-o"};
             for (int i = 0; i < 4; ++i) {
-                if(keys[i].startsWith(validKeys[i])) {
+                if (keys[i].startsWith(validKeys[i])) {
                     param[i] = keys[i].split("=")[1];
                 } else {
                     System.out.println("Этот ключ " + keys[i].split("=")[0] +
