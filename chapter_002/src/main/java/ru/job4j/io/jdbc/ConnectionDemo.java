@@ -12,13 +12,14 @@ import java.util.Properties;
 public class ConnectionDemo {
     public static void main(String[] args) throws ClassNotFoundException, SQLException, IOException {
         Class.forName("org.postgresql.Driver");
+        Properties properties = new Properties();
         try (InputStream input = new FileInputStream("./chapter_002/data/app.properties")) {
-            Properties properties = new Properties();
             properties.load(input);
-            String url = properties.getProperty("jdbc.url");
-            String login = properties.getProperty("jdbc.login");
-            String password = properties.getProperty("jdbc.password");
-            Connection connection = DriverManager.getConnection(url, login, password);
+        }
+        String url = properties.getProperty("jdbc.url");
+        String login = properties.getProperty("jdbc.login");
+        String password = properties.getProperty("jdbc.password");
+        try (Connection connection = DriverManager.getConnection(url, login, password)) {
             DatabaseMetaData metaData = connection.getMetaData();
             System.out.println(metaData.getUserName());
             System.out.println(metaData.getURL());
